@@ -1,5 +1,15 @@
 # CowinVaccineAvailabilityDashboard
 
+# TODO
+- [x] Display single day sessions.
+- [x] Display multiple days sessions.
+- [x] Search by date, district, pincode.
+- [x] Filter by age.
+- [ ] Basic Styling
+- [ ] Responsiveness / prep for mobile
+- [ ] Refresh data automatically every minute (or 30s?).
+- [ ] Search in table.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
 
 ## Development server
