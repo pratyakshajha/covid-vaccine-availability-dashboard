@@ -1,25 +1,25 @@
 export interface TableData {
-  sessionDate: Date;
+  session_date: Date;
   name: string;
   address: string;
   pincode: number;
-  feeType: string;
-  availableCapacity: number;
-  minAgeLimit: number;
+  fee_type: string;
+  available_capacity: number;
+  min_age_limit: number;
   vaccine: string;
   google_map: string;
 }
 
 export interface Center {
-  centerId: number;
+  center_id: number;
   name: string;
   address: string;
   block_name: string;
   district_name: string;
   state_name: string;
   pincode: number;
-  latitude: number;
-  longitude: number;
+  lat: number;
+  long: number;
   fee_type: string;
   sessions: Session[];
 }

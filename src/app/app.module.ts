@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';  
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle'; 
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatButtonToggleModule
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'en-IN'}],
   bootstrap: [AppComponent]

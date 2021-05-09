@@ -55,18 +55,20 @@ export class CowinService {
       let center = centers[i];
       for (let j in center.sessions) {
         let session = center.sessions[j]
-        let tableData: TableData = {
-          sessionDate: session.date,
-          name: center.name,
-          address: center.address,
-          pincode: center.pincode,
-          feeType: center.fee_type,
-          availableCapacity: session.available_capacity,
-          minAgeLimit: session.min_age_limit,
-          vaccine: session.vaccine,
-          google_map: this.getGmapUrl(session.lat, session.long)
-        }
-        tableDataArray.push(tableData);
+        if (session.available_capacity !=0 ) {
+          let tableData: TableData = {
+            session_date: session.date,
+            name: center.name,
+            address: center.address,
+            pincode: center.pincode,
+            fee_type: center.fee_type,
+            available_capacity: session.available_capacity,
+            min_age_limit: session.min_age_limit,
+            vaccine: session.vaccine,
+            google_map: this.getGmapUrl(center.lat, center.long)
+          }
+          tableDataArray.push(tableData);
+        }        
       }
     }       
     return tableDataArray;

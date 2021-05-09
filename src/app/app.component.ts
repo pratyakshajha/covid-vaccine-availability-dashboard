@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { Center, District, Session, TableData } from './services/constants/models';
+import { District, Session, TableData } from './services/constants/models';
 import { CowinService } from './services/cowin/cowin.service';
 import * as districtsJson from './services/constants/districts.json';
 
@@ -20,24 +20,29 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('weekPaginator', {static: true}) weekPaginator: MatPaginator;
   @ViewChild('weekSort') weekSort: MatSort;
   columnsToDisplay = ['date', 'name', 'address', 'pincode', 'fee', 'available_capacity', 'min_age_limit', 'vaccine'];
-  weekColumnsToDisplay = ['sessionDate', 'name', 'address', 'pincode', 'feeType', 'availableCapacity', 'minAgeLimit', 'vaccine'];
+  weekColumnsToDisplay = ['session_date', 'name', 'address', 'pincode', 'fee_type', 'available_capacity', 'min_age_limit', 'vaccine'];
   dataSource: MatTableDataSource<Session> = new MatTableDataSource();
   weekDataSource: MatTableDataSource<TableData> = new MatTableDataSource();
+  data: Session[];
+  weekData: TableData[];
 
   cowinService: CowinService = new CowinService();
 
   dateControl = new FormControl('');
   dateLabel: string = new Date(this.cowinService.today.setDate(this.cowinService.today.getDate() + 1)).toLocaleDateString('en-IN');
   pincodeControl = new FormControl('');
+  ageControl = new FormControl('');
   districtControl = new FormControl('');
-  districtOptions: District[] = <District[]>(districtsJson as any).default['districts'];
+  districtOptions: District[] = <District[]>(districtsJson as any).default;
   filteredDistrictOptions: Observable<District[]>;  
   formError: boolean = false;
   formErrorMsg: String = 'Error!';
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.cowinService.getSessionsByDateAndDistrict());
-    this.weekDataSource = new MatTableDataSource(this.cowinService.getSessionNextWeekByDateAndDistrict());
+    this.data = this.cowinService.getSessionsByDateAndDistrict();
+    this.dataSource = new MatTableDataSource(this.data);
+    this.weekData = this.cowinService.getSessionNextWeekByDateAndDistrict();
+    this.weekDataSource = new MatTableDataSource(this.weekData);
     
     this.filteredDistrictOptions = this.districtControl.valueChanges
     .pipe(
@@ -72,11 +77,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (district_id != undefined) {    
       this.cowinService.districtId = district_id;
 
-      this.dataSource = new MatTableDataSource(this.cowinService.getSessionsByDateAndDistrict());
+      this.data = this.cowinService.getSessionsByDateAndDistrict();
+      this.dataSource = new MatTableDataSource(this.data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       
-      this.weekDataSource = new MatTableDataSource(this.cowinService.getSessionNextWeekByDateAndDistrict());
+      this.weekData = this.cowinService.getSessionNextWeekByDateAndDistrict();
+      this.weekDataSource = new MatTableDataSource(this.weekData);      
       this.weekDataSource.paginator = this.weekPaginator;
       this.weekDataSource.sort = this.weekSort;
 
@@ -100,11 +107,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     } else {
       this.cowinService.pincode = pincode;
 
-      this.dataSource = new MatTableDataSource(this.cowinService.getSessionsByDateAndPincode());
+      this.data = this.cowinService.getSessionsByDateAndPincode();
+      this.dataSource = new MatTableDataSource(this.data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
 
-      this.weekDataSource = new MatTableDataSource(this.cowinService.getSessionNextWeekByDateAndPincode());
+      this.weekData = this.cowinService.getSessionNextWeekByDateAndPincode();
+      this.weekDataSource = new MatTableDataSource(this.weekData);
       this.weekDataSource.paginator = this.weekPaginator;
       this.weekDataSource.sort = this.weekSort;
 
@@ -112,6 +121,45 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.districtControl.setValue('');
     }
     this.districtControl.setValue('');
+  }
+
+  onAgeRangeChange(ageRange) {    
+    let filteredData: Session[];    
+    let filteredWeekData: TableData[];    
+    switch (ageRange) {
+      case "63":
+
+        this.dataSource = new MatTableDataSource(this.data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+        this.weekData = this.cowinService.getSessionNextWeekByDateAndPincode();
+        this.weekDataSource.paginator = this.weekPaginator;
+        this.weekDataSource.sort = this.weekSort;
+      break;
+      case "45":
+        filteredData = this.data.filter(session => session.min_age_limit === 45);
+        this.dataSource = new MatTableDataSource(filteredData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        
+        filteredWeekData = this.weekData.filter(tableData => tableData.min_age_limit === 45);
+        this.weekDataSource = new MatTableDataSource(filteredWeekData);
+        this.weekDataSource.paginator = this.weekPaginator;
+        this.weekDataSource.sort = this.weekSort;
+      break;
+      case "18":
+        filteredData = this.data.filter(session => session.min_age_limit === 18);
+        this.dataSource = new MatTableDataSource(filteredData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+        filteredWeekData = this.weekData.filter(tableData => tableData.min_age_limit === 18);
+        this.weekDataSource = new MatTableDataSource(filteredWeekData);
+        this.weekDataSource.paginator = this.weekPaginator;
+        this.weekDataSource.sort = this.weekSort;
+      break;
+    }
   }
 
 }
