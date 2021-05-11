@@ -1,4 +1,3 @@
-<p> Default values: date is tomorrow, district is nagpur and pincode is 440010 </p>
 <p *ngIf="formError" style="color: red;">{{ formErrorMsg }}</p>
 <form>
   <mat-form-field appearance="fill">
@@ -27,11 +26,13 @@
   </mat-form-field>
   <button mat-raised-button (click)="updateTableByPincode()" color="primary"><mat-icon>search</mat-icon></button>
   
-  <mat-button-toggle-group (change)="onAgeRangeChange($event.value)" [formControl]="ageControl">
+  <mat-button-toggle-group (change)="updateAgeRange()" [formControl]="ageRangeControl">
     <mat-button-toggle checked value="63">All</mat-button-toggle>
     <mat-button-toggle value="45">45+</mat-button-toggle>
     <mat-button-toggle value="18">18+</mat-button-toggle>
-  </mat-button-toggle-group>    
+  </mat-button-toggle-group> 
+  
+  <p>Last updated on: {{ lastUpdated | date:'medium' }} (auto updates every 1 minute) </p>
 </form>
 
 

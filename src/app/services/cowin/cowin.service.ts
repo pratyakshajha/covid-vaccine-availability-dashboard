@@ -1,6 +1,7 @@
 import { Center, Session, TableData } from "../constants/models";
 
 export class CowinService {
+  lastUpdated: Date;
   BASE_URL: string = "https://cdn-api.co-vin.in/api";
   STATES_URL: string = "/v2/admin/location/states";
   // append {state_id}
@@ -17,7 +18,7 @@ export class CowinService {
   today: Date = new Date(Date.now());
   searchDate: string = this.getDateString(new Date(this.today.setDate(this.today.getDate() + 1)));
 
-  request:XMLHttpRequest = new XMLHttpRequest();
+  request:XMLHttpRequest = new XMLHttpRequest();  
   
   constructor() { }
 
@@ -26,11 +27,12 @@ export class CowinService {
     let qParams =  "?district_id=" + this.districtId + "&date=" + this.searchDate;
     this.request.open('GET', this.BASE_URL + this.WEEK_DISTRICT_URL + qParams, false);
     this.request.onload = function () {       
-      if (this.status >= 200 && this.status < 400) {
+      if (this.status >= 200 && this.status < 400) {        
         centers = <Center[]>JSON.parse(this.response)['centers'];        
       }
      }     
     this.request.send();
+    this.lastUpdated = new Date(Date.now());
     return this.getTableDataFromCenterResponseData(centers);
     
   }
@@ -45,6 +47,7 @@ export class CowinService {
       }
      }     
     this.request.send();
+    this.lastUpdated = new Date(Date.now());
     return this.getTableDataFromCenterResponseData(centers);
     
   }
@@ -87,6 +90,7 @@ export class CowinService {
     sessions.forEach(session => {
       session.google_map = this.getGmapUrl(session.lat, session.long);
     });
+    this.lastUpdated = new Date(Date.now());
     return sessions;    
   }
 
@@ -103,6 +107,7 @@ export class CowinService {
     sessions.forEach(session => {
       session.google_map = this.getGmapUrl(session.lat, session.long);
     });
+    this.lastUpdated = new Date(Date.now());
     return sessions;    
   }
 

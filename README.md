@@ -7,8 +7,8 @@
 - [x] Filter by age.
 - [ ] Basic Styling
 - [ ] Responsiveness / prep for mobile
-- [ ] Refresh data automatically every minute (or 30s?).
-- [ ] Search in table.
+- [x] Refresh data automatically every minute.
+- [ ] Subscribe to updates.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
 
