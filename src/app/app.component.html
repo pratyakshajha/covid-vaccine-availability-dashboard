@@ -1,142 +1,159 @@
-<p *ngIf="formError" style="color: red;">{{ formErrorMsg }}</p>
-<form>
-  <mat-form-field appearance="fill">
-    <mat-label>Date</mat-label>
-    <input matInput placeholder="{{ dateLabel }}" [matDatepicker]="picker" [formControl]="dateControl">           
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker disabled="false"></mat-datepicker>
-  </mat-form-field>  
-    
-  <mat-form-field appearance="fill">
-    <mat-label>District</mat-label>
-    <input type="text" matInput [formControl]="districtControl" [matAutocomplete]="auto">
-    <mat-error *ngIf="districtControl.invalid && (districtControl.dirty || districtControl.touched)">{{ getErrorMessage(districtControl) }}</mat-error>
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let district of filteredDistrictOptions | async" [value]="district">
-        {{district.district_name}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-  <button mat-raised-button (click)="updateTableByDistrict()" color="primary"><mat-icon>search</mat-icon></button>
-  
-  <mat-form-field appearance="fill">
-    <mat-label>Pincode</mat-label>
-    <input type="text" matInput [formControl]="pincodeControl">
-    <mat-error *ngIf="pincodeControl.invalid && (pincodeControl.dirty)">{{ getErrorMessage(pincodeControl) }}</mat-error>
-  </mat-form-field>
-  <button mat-raised-button (click)="updateTableByPincode()" color="primary"><mat-icon>search</mat-icon></button>
-  
-  <mat-button-toggle-group (change)="updateAgeRange()" [formControl]="ageRangeControl">
-    <mat-button-toggle checked value="63">All</mat-button-toggle>
-    <mat-button-toggle value="45">45+</mat-button-toggle>
-    <mat-button-toggle value="18">18+</mat-button-toggle>
-  </mat-button-toggle-group> 
-  
-  <p>Last updated on: {{ lastUpdated | date:'medium' }} (auto updates every 1 minute) </p>
-</form>
+<div *ngIf="formError" class="search-error">
+  <h3>{{ formErrorMsg }}</h3>
+</div>
 
+<div class="search-container">
+  <form>
+    <div class="date-form-field">
+    <mat-form-field appearance="standard">
+      <mat-label>Date</mat-label>
+      <input matInput placeholder="{{ dateLabel }}" [matDatepicker]="picker" [formControl]="dateControl">           
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker disabled="false"></mat-datepicker>
+    </mat-form-field>  
+    </div>
+      
+    <div class="district-form-field">
+    <mat-form-field appearance="standard">
+      <mat-label>District</mat-label>
+      <input type="text" matInput [formControl]="districtControl" [matAutocomplete]="auto">
+      <mat-error *ngIf="districtControl.invalid && (districtControl.dirty || districtControl.touched)">{{ getErrorMessage(districtControl) }}</mat-error>
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let district of filteredDistrictOptions | async" [value]="district">
+          {{district.district_name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <button mat-raised-button (click)="updateTableByDistrict()" color="primary"><mat-icon>search</mat-icon></button>
+    </div>
 
-<table #sort="matSort" mat-table matSort [dataSource]="dataSource" style="width: 100%">
+    <div class="pin-form-field">
+    <mat-form-field appearance="standard">
+      <mat-label>Pincode</mat-label>
+      <input type="text" matInput [formControl]="pincodeControl">
+      <mat-error *ngIf="pincodeControl.invalid && (pincodeControl.dirty)">{{ getErrorMessage(pincodeControl) }}</mat-error>
+    </mat-form-field>
+    <button mat-raised-button (click)="updateTableByPincode()" color="primary"><mat-icon>search</mat-icon></button>
+    </div>
+
+    <div class="age-form-field">
+    <mat-button-toggle-group (change)="updateAgeRange()" [formControl]="ageRangeControl">
+      <mat-button-toggle checked value="63">All</mat-button-toggle>
+      <mat-button-toggle value="45">45+</mat-button-toggle>
+      <mat-button-toggle value="18">18+</mat-button-toggle>
+    </mat-button-toggle-group> 
+    </div>
+
+  </form>
+
+</div>
+
+<p style="padding-left: 15px;">Last updated on: {{ lastUpdated | date:'medium' }} <span class="mat-caption">(auto updates every 1 minute) </span></p>
+
+<mat-table #sort="matSort" matSort [dataSource]="dataSource" mat-elevation-z8>
 
   <ng-container matColumnDef="date">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> Date </th>
-    <td mat-cell *matCellDef="let session"> {{session.date}} </td>
+    <mat-header-cell mat-sort-header *matHeaderCellDef> Date </mat-header-cell>
+    <mat-cell data-label="date" *matCellDef="let session"> {{session.date}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="name">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let session"> {{session.name}} </td>
+    <mat-header-cell mat-sort-header *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell data-label="name" *matCellDef="let session"> {{session.name}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="address">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> Address </th>
-    <td mat-cell *matCellDef="let session">
+    <mat-header-cell mat-sort-header *matHeaderCellDef> Address </mat-header-cell>
+    <mat-cell data-label="address" *matCellDef="let session">
       <button mat-icon-button matTooltip="This maybe inaccurate. Do verify!">
-        <a href = "{{session.google_map}}"><mat-icon>place</mat-icon></a>
+        <a href = "{{session.google_map}}"><mat-icon color="primary" inline="true">place</mat-icon></a>
       </button>
-      {{session.address}} </td>
+      {{session.address}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="pincode">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> PIN code </th>
-    <td mat-cell *matCellDef="let session"> {{session.pincode}} </td>
+    <mat-header-cell mat-sort-header *matHeaderCellDef> PIN </mat-header-cell>
+    <mat-cell data-label="pin" *matCellDef="let session"> {{session.pincode}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="fee">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> Fee </th>
-    <td mat-cell *matCellDef="let session"> {{session.fee}} </td>
+    <mat-header-cell mat-sort-header *matHeaderCellDef> Fee </mat-header-cell>
+    <mat-cell data-label="fee" *matCellDef="let session"> {{session.fee}} </mat-cell>
   </ng-container>
   
   <ng-container matColumnDef="available_capacity">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> Available Capacity </th>
-    <td mat-cell *matCellDef="let session"> {{session.available_capacity}} </td>
+    <mat-header-cell mat-sort-header *matHeaderCellDef> Capacity </mat-header-cell>
+    <mat-cell data-label="capacity" *matCellDef="let session"> {{session.available_capacity}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="min_age_limit">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> Minimum Age </th>
-    <td mat-cell *matCellDef="let session"> {{session.min_age_limit}} </td>
+    <mat-header-cell mat-sort-header *matHeaderCellDef> Age Limit </mat-header-cell>
+    <mat-cell data-label="age limit" *matCellDef="let session"> {{session.min_age_limit}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="vaccine">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> Vaccine </th>
-    <td mat-cell *matCellDef="let session"> {{session.vaccine}} </td>
+    <mat-header-cell mat-sort-header *matHeaderCellDef> Vaccine </mat-header-cell>
+    <mat-cell data-label="vaccine" *matCellDef="let session"> {{session.vaccine}} </mat-cell>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  <mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></mat-row>
 
-</table>
+</mat-table>
 <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
-<p> Next few days</p>
-<table #weekSort="matSort" mat-table matSort [dataSource]="weekDataSource" style="width: 100%">
+<p style="padding-left: 15px;"> Next few days availability</p>
+<mat-table #weekSort="matSort" matSort [dataSource]="weekDataSource" mat-elevation-z8>
 
   <ng-container matColumnDef="session_date">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> Date </th>
-    <td mat-cell *matCellDef="let center"> {{center.session_date}} </td>
+    <mat-header-cell mat-sort-header *matHeaderCellDef> Date </mat-header-cell>
+    <mat-cell data-label="date" *matCellDef="let center"> {{center.session_date}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="name">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let center"> {{center.name}} </td>
+    <mat-header-cell mat-sort-header *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell data-label="name" *matCellDef="let center"> {{center.name}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="address">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> Address </th>
-    <td mat-cell *matCellDef="let center"> 
+    <mat-header-cell mat-sort-header *matHeaderCellDef> Address </mat-header-cell>
+    <mat-cell data-label="address" *matCellDef="let center"> 
       <button mat-icon-button matTooltip="This maybe inaccurate. Do verify!">
-        <a href = "{{center.google_map}}"><mat-icon>place</mat-icon></a>
+        <a href = "{{center.google_map}}"><mat-icon color="primary" inline="true">place</mat-icon></a>
       </button>
-      {{center.address}} </td>
+      {{center.address}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="pincode">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> PIN code </th>
-    <td mat-cell *matCellDef="let center"> {{center.pincode}} </td>
+    <mat-header-cell mat-sort-header *matHeaderCellDef> PIN </mat-header-cell>
+    <mat-cell data-label="pin" *matCellDef="let center"> {{center.pincode}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="fee_type">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> Fee Type </th>
-    <td mat-cell *matCellDef="let center"> {{center.fee_type}} </td>
+    <mat-header-cell mat-sort-header *matHeaderCellDef> Fee Type </mat-header-cell>
+    <mat-cell data-label="fee type" *matCellDef="let center"> {{center.fee_type}} </mat-cell>
   </ng-container>
   
   <ng-container matColumnDef="available_capacity">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> Available Capacity </th>
-    <td mat-cell *matCellDef="let center"> {{center.available_capacity}} </td>
+    <mat-header-cell mat-sort-header *matHeaderCellDef> Capacity </mat-header-cell>
+    <mat-cell data-label="capacity" *matCellDef="let center"> {{center.available_capacity}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="min_age_limit">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> Minimum Age </th>
-    <td mat-cell *matCellDef="let center"> {{center.min_age_limit}} </td>
+    <mat-header-cell mat-sort-header *matHeaderCellDef> Age Limit </mat-header-cell>
+    <mat-cell data-label="age limit" *matCellDef="let center"> {{center.min_age_limit}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="vaccine">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef> Vaccine </th>
-    <td mat-cell *matCellDef="let center"> {{center.vaccine}} </td>
+    <mat-header-cell mat-sort-header *matHeaderCellDef> Vaccine </mat-header-cell>
+    <mat-cell data-label="vaccine" *matCellDef="let center"> {{center.vaccine}} </mat-cell>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="weekColumnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let myRowData; columns: weekColumnsToDisplay"></tr>
+  <mat-header-row *matHeaderRowDef="weekColumnsToDisplay"></mat-header-row>
+  <mat-row *matRowDef="let myRowData; columns: weekColumnsToDisplay"></mat-row>
 
-</table>
+</mat-table>
 <mat-paginator #weekPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+
+<p class="mat-caption" style="bottom: 0; padding-left: 15px;">Note: location may not be accurate </p>

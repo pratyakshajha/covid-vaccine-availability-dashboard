@@ -1,2 +1,132 @@
-form
-    padding: 20px
+.search-error
+  color: maroon
+  background-color: #ffc7c7
+  font-weight: bold
+  padding: 15px
+  margin: 0
+
+.search-container
+  display: flex
+  align-items: center
+  padding: 20px
+
+  form
+    display: flex
+    width: 100%
+    flex-wrap: wrap 
+    justify-content: space-around
+
+    .date-form-field
+      width: 22%
+      padding: 0 5px
+
+      .mat-form-field
+        width: 100%
+
+    .district-form-field
+      width: 22%
+      padding: 0 5px
+
+    .pin-form-field
+      width: 22%
+      padding: 0 5px
+
+    .age-form-field
+      width: 20%
+      padding: 0 5px
+
+      .mat-button-toggle-group
+        width: 100%
+
+        .mat-button-toggle
+          width: 32%
+
+    .district-form-field, .pin-form-field
+      display: flex
+      justify-content: space-around
+
+      .mat-form-field
+        width: 75%
+
+    button
+      max-height: 50px
+
+.mat-table
+  width: 100%
+
+  .mat-cell
+    .mat-icon
+      font-size: 24px
+
+$breakpoint: 768px
+@media (max-width: $breakpoint) 
+
+  .search-container
+    display: flex
+    width: auto
+
+    form
+      display: flex
+      width: 100%
+
+      .date-form-field
+        width: 100%
+
+        .mat-form-field
+          width: 100%
+
+      .district-form-field
+        width: 100%
+
+      .pin-form-field
+        width: 100%
+
+      .age-form-field
+        width: 100%
+  
+  .mat-table     
+    border: 0
+    vertical-align: middle
+    
+    .mat-header-row
+      max-width: 100%
+
+      .mat-header-cell
+          flex: 1 auto
+
+    .mat-header-cell:first-child
+      padding-left: 4px
+
+    .mat-header-cell:last-child
+      padding-right: 8px
+
+    .mat-row
+      border-bottom: 5px solid #ddd
+      display: block
+      min-height: 10px
+  
+    .mat-cell
+      // border-bottom: 1px solid #ddd
+      display: block
+      // font-size: 1em
+      text-align: right
+      // font-weight: bold
+      // height:30px
+      margin-bottom: 1%
+      padding: 0 24px
+
+      .mat-icon
+        font-size: 18px
+  
+    .mat-cell:before    
+      content: attr(data-label)
+      float: left
+      text-transform: uppercase
+      font-weight: normal
+      font-size: 1em
+  
+    .mat-cell:last-child
+      border-bottom: 0
+  
+    .mat-cell:first-child
+      margin-top: 2%

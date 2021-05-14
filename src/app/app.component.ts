@@ -86,7 +86,7 @@ export class AppComponent implements OnInit {
   }
 
   updateTableByPincode() {    
-    let pincode: string = this.pincodeControl.value;
+    let pincode: string = this.pincodeControl.value.trim();
     let searchDate: string =  this.dateControl.value;    
     if (searchDate != '') {
       this.cowinService.searchDate = this.cowinService.getDateString(new Date(searchDate));

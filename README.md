@@ -5,8 +5,8 @@
 - [x] Display multiple days sessions.
 - [x] Search by date, district, pincode.
 - [x] Filter by age.
-- [ ] Basic Styling
-- [ ] Responsiveness / prep for mobile
+- [x] Basic Styling
+- [x] Responsiveness / prep for mobile
 - [x] Refresh data automatically every minute.
 - [ ] Subscribe to updates.
 
