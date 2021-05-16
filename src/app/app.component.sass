@@ -1,3 +1,6 @@
+p.title-text
+  margin: 16px
+  
 .search-error
   color: maroon
   background-color: #ffc7c7
@@ -54,7 +57,24 @@
 .mat-table
   width: 100%
 
+  .mat-header-cell
+    flex: 0 1 100px
+
   .mat-cell
+    flex: 0 1 100px
+
+  .mat-header-cell.mat-column-name
+    flex: 1 1 120px
+
+  .mat-cell.mat-column-name
+    flex: 1 1 120px
+
+  .mat-header-cell.mat-column-address
+    flex: 1 1 220px
+
+  .mat-cell.mat-column-address
+    flex: 1 1 220px    
+
     .mat-icon
       font-size: 24px
 
@@ -106,12 +126,8 @@ $breakpoint: 768px
       min-height: 10px
   
     .mat-cell
-      // border-bottom: 1px solid #ddd
       display: block
-      // font-size: 1em
       text-align: right
-      // font-weight: bold
-      // height:30px
       margin-bottom: 1%
       padding: 0 24px
 
