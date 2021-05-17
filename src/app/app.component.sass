@@ -1,6 +1,17 @@
 p.title-text
   margin: 16px
-  
+  width: 100%
+
+.text-content
+  margin: 0 15px
+
+.text-content.empty-message
+  padding: 20px
+  color: maroon
+  background-color: #ffc7c7
+  font-weight: bold
+  text-align: center
+
 .search-error
   color: maroon
   background-color: #ffc7c7
@@ -12,6 +23,7 @@ p.title-text
   display: flex
   align-items: center
   padding: 20px
+  width: 95%
 
   form
     display: flex
@@ -63,6 +75,12 @@ p.title-text
   .mat-cell
     flex: 0 1 100px
 
+  .mat-header-cell.mat-column-date
+    flex: 1 1 30px
+
+  .mat-cell.mat-column-date
+    flex: 1 1 30px 
+
   .mat-header-cell.mat-column-name
     flex: 1 1 120px
 
@@ -75,8 +93,24 @@ p.title-text
   .mat-cell.mat-column-address
     flex: 1 1 220px    
 
+    a
+      color: black
+      text-decoration: none 
+    
+    a:hover
+      font-weight: bolder
+
     .mat-icon
       font-size: 24px
+
+  .mat-header-cell.mat-column-vaccine
+    flex: 1 1 30px
+
+  .mat-cell.mat-column-vaccine
+    flex: 1 1 30px   
+
+mat-paginator
+  width: 100%
 
 $breakpoint: 768px
 @media (max-width: $breakpoint) 

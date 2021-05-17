@@ -30,8 +30,7 @@ export class AppComponent implements OnInit {
   lastUpdated: Date = new Date(Date.now());
   lastUpdatedByDistrict: boolean = true;
 
-  dateControl = new FormControl(this.lastUpdated);
-  dateLabel: string = new Date(this.cowinService.today.setDate(this.cowinService.today.getDate() + 1)).toLocaleDateString('en-IN');
+  dateControl = new FormControl(this.cowinService.today);
   pincodeControl = new FormControl('');
   districtControl = new FormControl({"district_id": 365,"district_name": "Nagpur"});
   districtOptions: District[] = <District[]>(districtsJson as any).default;

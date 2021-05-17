@@ -9,7 +9,7 @@
     <div class="date-form-field">
     <mat-form-field appearance="standard">
       <mat-label>Date</mat-label>
-      <input matInput placeholder="{{ dateLabel }}" [matDatepicker]="picker" [formControl]="dateControl">           
+      <input matInput [matDatepicker]="picker" [formControl]="dateControl">           
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker disabled="false"></mat-datepicker>
       <mat-error *ngIf="dateControl.invalid && (dateControl.dirty || dateControl.touched)"> invalid date </mat-error>
@@ -48,10 +48,13 @@
     </div>
 
   </form>
-
 </div>
 
-<p style="padding-left: 15px;">Last updated on: {{ lastUpdated | date:'medium' }} <span class="mat-caption">(auto updates every 1 minute) </span></p>
+<p class="text-content" >Last updated on: {{ lastUpdated | date:'medium' }} <span class="mat-caption">(auto updates every 1 minute) </span></p>
+
+<div *ngIf="this.data.length === 0" class="text-content empty-message">
+  <h3>Not found! Try again later.</h3>
+</div>
 
 <mat-table #sort="matSort" matSort [dataSource]="dataSource" mat-elevation-z8>
 
@@ -71,7 +74,7 @@
       <button mat-icon-button matTooltip="This maybe inaccurate. Do verify!">
         <a href = "{{session.google_map}}"><mat-icon color="primary" inline="true">place</mat-icon></a>
       </button>
-      {{session.address}} </mat-cell>
+      <a href = "{{session.google_map}}">{{session.address}}</a> </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="pincode">
@@ -105,7 +108,12 @@
 </mat-table>
 <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
-<p style="padding-left: 15px;"> Next few days availability</p>
+<h3 class="text-content"> Next few days availability</h3>
+
+<div *ngIf="this.weekData.length === 0" class="text-content empty-message">
+  <h3>Not found! Try again later.</h3>
+</div>
+
 <mat-table #weekSort="matSort" matSort [dataSource]="weekDataSource" mat-elevation-z8>
 
   <ng-container matColumnDef="session_date">
@@ -124,7 +132,7 @@
       <button mat-icon-button matTooltip="This maybe inaccurate. Do verify!">
         <a href = "{{center.google_map}}"><mat-icon color="primary" inline="true">place</mat-icon></a>
       </button>
-      {{center.address}} </mat-cell>
+      <a href = "{{center.google_map}}">{{center.address}}</a></mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="pincode">
@@ -158,5 +166,12 @@
 </mat-table>
 <mat-paginator #weekPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
-
-<p class="mat-caption" style="bottom: 0; padding-left: 15px;">Note: This is just to view available vaccines and does not support booking appointments. Linked locations may not be accurate.</p>
+<div class="text-content"> How to use:
+  <ul>
+    <li>Slots are searchable by date and district or date and pincode. </li>
+    <li>The results can be filtered by age category. For example selecting 18+ will show slots for those having minimum age limit of 18.</li>
+    <li>The header on top of the table will sort the slots based on the header. For example clicking capacity will sort the slots with show lowest capacity first and clicking it again will show highest capacity first.</li>
+    <li>Clicking on the address opens it in Google Maps</li>
+  </ul>
+</div>
+<p class="mat-caption text-content" style="bottom: 0;">Note: This is just to view available vaccines and does not support booking appointments. Linked locations may not be accurate.</p>
