@@ -52,7 +52,7 @@
 
 <p class="text-content" >Last updated on: {{ lastUpdated | date:'medium' }} <span class="mat-caption">(auto updates every 1 minute) </span></p>
 
-<div *ngIf="this.data.length === 0" class="text-content empty-message">
+<div *ngIf="this.dataSource.data.length === 0" class="text-content empty-message">
   <h3>Not found! Try again later.</h3>
 </div>
 
@@ -110,7 +110,7 @@
 
 <h3 class="text-content"> Next few days availability</h3>
 
-<div *ngIf="this.weekData.length === 0" class="text-content empty-message">
+<div *ngIf="this.weekDataSource.data.length === 0" class="text-content empty-message">
   <h3>Not found! Try again later.</h3>
 </div>
 
