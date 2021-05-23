@@ -11,7 +11,7 @@ For more details, view my [blog post](https://pratyakshajha.me/covid-india-vacci
 ![demo](demo.gif)
 
 # Installation
-- Clone the repository `git clone ` 
+- Clone the repository `git clone https://github.com/pratyakshajha/covid-vaccine-availability-dashboard.git` 
 - Install dependencies `npm install`
 - Run `ng serve`
 
