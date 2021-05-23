@@ -1,4 +1,24 @@
-# CowinVaccineAvailabilityDashboard
+# Covid Vaccine Availability Dashboard
+
+The purpose of this project is to quickly view vaccine availability by district or PIN code. Checking it with [Cowin app](cowin.gov.in) by the government of India can be time taking and cumbersome due to frequent timeouts.
+
+
+Note: Use this app to view vaccine availability. The actual booking needs to be done by the [Cowin app](cowin.gov.in) 
+
+For more details, view my [blog post](https://pratyakshajha.me/covid-india-vaccine-appointment-availability)
+
+
+![demo](demo.gif)
+
+# Installation
+- Clone the repository `git clone ` 
+- Install dependencies `npm install`
+- Run `ng serve`
+
+# Requirements
+- NPM
+- Angular 12
+- Angular Material
 
 # TODO
 - [x] Display single day sessions.
@@ -10,6 +30,7 @@
 - [x] Refresh data automatically every minute.
 - [ ] Subscribe to updates.
 
+# Angular CLI help
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
 
 ## Development server
@@ -23,14 +44,6 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ## Further help
 
