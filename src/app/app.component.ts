@@ -78,6 +78,7 @@ export class AppComponent implements OnInit {
       this.lastUpdatedByDistrict = true;
       this.formError = false;
       this.pincodeControl.setValue('');
+      this.ageRangeControl.setValue('63');
     } else {
       this.formError = true;
       this.formErrorMsg = 'Select a district';
@@ -102,9 +103,9 @@ export class AppComponent implements OnInit {
 
       this.lastUpdatedByDistrict = false;
       this.formError = false;
-      this.districtControl.setValue('');
     }
     this.districtControl.setValue('');
+    this.ageRangeControl.setValue('63');
   }
 
   updateAgeRange() {    
