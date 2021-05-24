@@ -83,10 +83,11 @@ export class CowinService {
     this.request.open('GET', this.BASE_URL + this.DISTRICT_URL + qParams, false);
     this.request.onload = function () { 
       if (this.status >= 200 && this.status < 400) {
-        sessions = <Session[]>JSON.parse(this.response)['sessions'];           
+        sessions = <Session[]>JSON.parse(this.response)['sessions'];
+        sessions = sessions.filter(session => session.available_capacity !== 0);           
       }            
      }
-    this.request.send();
+    this.request.send();    
     sessions.forEach(session => {
       session.google_map = this.getGmapUrl(session.lat, session.long);
     });
@@ -100,7 +101,8 @@ export class CowinService {
     this.request.open('GET', this.BASE_URL + this.PINCODE_URL + qParams, false);
     this.request.onload = function () { 
       if (this.status >= 200 && this.status < 400) {
-        sessions = <Session[]>JSON.parse(this.response)['sessions'];                   
+        sessions = <Session[]>JSON.parse(this.response)['sessions'];  
+        sessions = sessions.filter(session => session.available_capacity !== 0);                 
       }            
      }
     this.request.send();
